@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import { axios } from "./module/http/interceptor";
+import LoginForm from "./module/ui/login-form";
+import { useState } from "react";
+import { BASE_URL } from "./constants";
 
 function App() {
+  const [places, setplaces] = useState([]);
+  const getPlace = async () => {
+    const data = await axios.get(BASE_URL + "don_vi/all");
+    setplaces(data);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <img src={logo} className="App-logo" alt="logo" />
+      <p> press button to get places</p>
+      <button onClick={getPlace}>get places</button>
+      <p>{JSON.stringify(places.data)}</p>
+      <br></br>
+      <LoginForm></LoginForm>
     </div>
   );
 }
